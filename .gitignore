@@ -1,0 +1,12 @@
+*.json
+*.csv
+*.CSV
+*.LOG
+*.log
+*.png
+*.zip
+*.gz
+*.bz2
+*.ipynb
+.pynb_checkpoints
+__pycache__
