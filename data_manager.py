@@ -118,7 +118,7 @@ if __name__ == '__main__':
     directory_name = sys.argv[1]
 
     manager = DataManager()
-    manager.load_data('/home/bob/tmp/data/uploaded/ctt')
+    manager.load_data(directory_name)
 
     # you can export data during a time window by specifying begin and end dates during export
     begin = datetime.datetime(2019,11,1)
