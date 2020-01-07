@@ -85,20 +85,29 @@ class DataManager:
         health = self.health_data
         gps = self.gps_data
         if begin is not None:
-            beeps = beeps[beeps.Time > begin]
-            health = health[health.Time > begin]
-            gps = gps[gps['recorded at'] > begin]
+            if beeps is not None:
+                beeps = beeps[beeps.Time > begin]
+            if health is not None:
+                health = health[health.Time > begin]
+            if gps is not None:
+                gps = gps[gps['recorded at'] > begin]
         if end is not None:
-            beeps = beeps[beeps.Time < end]
-            health = health[health.Time < end]
-            gps = gps[gps['recorded at'] < end]
+            if beeps is not None:
+                beeps = beeps[beeps.Time < end]
+            if health is not None:
+                health = health[health.Time < end]
+            if gps is not None:
+                gps = gps[gps['recorded at'] < end]
 
-        outfilename = 'station-beep-data.merged.{}.csv'.format(now.strftime('%Y-%m-%d_%H%M%S'))
-        beeps.to_csv(outfilename, index=False)
-        outfilename = 'station-health-data.merged.{}.csv'.format(now.strftime('%Y-%m-%d_%H%M%S'))
-        health.to_csv(outfilename, index=False)
-        outfilename = 'station-gps-data.merged.{}.csv'.format(now.strftime('%Y-%m-%d_%H%M%S'))
-        gps.to_csv(outfilename, index=False)
+        if beeps is not None:
+            outfilename = 'station-beep-data.merged.{}.csv'.format(now.strftime('%Y-%m-%d_%H%M%S'))
+            beeps.to_csv(outfilename, index=False)
+        if health is not None:
+            outfilename = 'station-health-data.merged.{}.csv'.format(now.strftime('%Y-%m-%d_%H%M%S'))
+            health.to_csv(outfilename, index=False)
+        if gps is not None:
+            outfilename = 'station-gps-data.merged.{}.csv'.format(now.strftime('%Y-%m-%d_%H%M%S'))
+            gps.to_csv(outfilename, index=False)
 
 
 if __name__ == '__main__':
