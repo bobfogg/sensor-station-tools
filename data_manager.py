@@ -1,5 +1,6 @@
 import os
 import datetime
+from pytz import utc
 import glob
 import pandas as pd
 import logging
@@ -23,7 +24,7 @@ class DataManager:
         path = '{}{}{}'.format(directory_name, os.path.sep, self.beep_pattern)
         beep_files = glob.glob(path)
         dfs_to_merge = []
-        logging.info('preparing {:,} beep files for merge'.format(len(beep_files)))
+        logging.info('preparing {:,} beep files for merge from {}'.format(len(beep_files), path))
         for filename in sorted(beep_files):
             if filename.find('node') == -1:
                 # only process if node is not part of the pattern ...
@@ -121,7 +122,7 @@ if __name__ == '__main__':
     manager.load_data(directory_name)
 
     # you can export data during a time window by specifying begin and end dates during export
-    begin = datetime.datetime(2019,11,1)
-    end = datetime.datetime(2019,11,7)
+    begin = datetime.datetime(2019,11,1).replace(tzinfo=utc)
+    end = datetime.datetime(2019,11,7).replace(tzinfo=utc)
     #manager.export_data(begin=begin, end=end)
     manager.export_data()
