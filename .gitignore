@@ -10,3 +10,6 @@
 *.ipynb
 .pynb_checkpoints
 __pycache__
+dist/
+build/
+station_tools.egg-info/
