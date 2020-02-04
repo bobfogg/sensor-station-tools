@@ -4,7 +4,7 @@ with open("README.MD", "r") as inFile:
 
 setuptools.setup(
     name="station-tools",
-    version="0.0.2",
+    version="0.0.3",
     author="Bob Fogg",
     author_email="bob.fogg@celltracktech.com",
     description="A package for managing and analyzing CTT LifeTag datasets",

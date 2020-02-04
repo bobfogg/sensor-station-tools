@@ -1,5 +1,5 @@
 import pandas as pd
-from station.data import datafile
+from . import datafile
 
 class NodeHealthFile(datafile.DataFile):
     """Node Health File"""

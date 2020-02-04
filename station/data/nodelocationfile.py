@@ -1,6 +1,6 @@
 import pandas as pd
 import utm
-from station.data import datafile
+from . import datafile
 
 class NodeLocationFile(datafile.DataFile):
     """Node Location File Encapsulation
@@ -9,8 +9,10 @@ class NodeLocationFile(datafile.DataFile):
         super(NodeLocationFile, self).__init__(filename)
 
     def _clean(self):
-        """append utm"""
+        """rename lat,lng to node_lat, node_lng; append utm"""
+        self.df = self.df.rename(columns={'lat': 'node_lat', 'lng': 'node_lng'})
         self.df = self.append_utm(self.df)
+        return self.df
 
     def append_utm(self, df):
         """append utm x,y,zone,letter to dataframe"""
@@ -19,13 +21,13 @@ class NodeLocationFile(datafile.DataFile):
         zones = []
         letters = []
         for i, record in df.iterrows():
-            (x,y,zone,letter) = utm.from_latlon(record.lat, record.lng)
+            (x,y,zone,letter) = utm.from_latlon(record.node_lat, record.node_lng)
             xs.append(x)
             ys.append(y)
             zones.append(zone)
             letters.append(letter)
-        df['x'] = xs
-        df['y'] = ys
+        df['node_x'] = xs
+        df['node_y'] = ys
         df['zone'] = zones
         df['letter'] = letters
         return df

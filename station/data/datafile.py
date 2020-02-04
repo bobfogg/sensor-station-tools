@@ -7,7 +7,7 @@ class DataFile:
         self.filename = filename
         df = pd.read_csv(filename)
         self.df = self._clean_node_id(df)
-        self._clean()
+        self.df = self._clean()
 
     def _clean(self):
         """logic for preparing the data frame for a given file type"""
