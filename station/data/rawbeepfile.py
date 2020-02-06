@@ -16,7 +16,6 @@ class RawBeepFile(datafile.DataFile):
         drop na records
         consistent node id"""
         df = self.df
-        df = pd.read_csv(self.filename)
         df.Time = pd.to_datetime(df.Time)
 
         # drop na records
@@ -24,7 +23,7 @@ class RawBeepFile(datafile.DataFile):
         df = df.dropna()
         dropped_count = pre_count - df.shape[0]
         if dropped_count > 0:
-            logging.info('dropped {:,} n/a records from {:,} records'.format(dropped_count, pre_count))
+            logging.error('dropped {:,} n/a records from {:,} records'.format(dropped_count, pre_count))
         df = df.set_index('Time')
 
         # drop abnormal RSSI values
