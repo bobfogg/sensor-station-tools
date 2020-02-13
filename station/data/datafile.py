@@ -1,5 +1,4 @@
 import pandas as pd
-
 class DataFile:
     """generic csv data file abstraction"""
     def __init__(self, filename):
@@ -11,10 +10,10 @@ class DataFile:
 
     def _clean(self):
         """logic for preparing the data frame for a given file type"""
-        pass
+        return self.df
 
     def _clean_node_id(self, df):
         """strip leading 0 from NodeId"""
         if 'NodeId' in df.columns:
-            df.NodeId = df.NodeId.apply(lambda record: record.lstrip("0").upper())
+            df.NodeId = df.NodeId.apply(lambda record: str(record).lstrip("0").upper())
         return df
