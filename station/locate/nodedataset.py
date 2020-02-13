@@ -17,7 +17,7 @@ class NodeDataset:
         df = df.set_index('Time')
         delta = self.beeps.beep_count() - df.shape[0]
         if delta > 0:
-            logging.error('dropped {:,} records after merging node locations'.format(delta))
+            logging.warning('dropped {:,} records after merging node locations'.format(delta))
         self.df = df
 
     def save(self, filename, channel=None, tag_id=None):
