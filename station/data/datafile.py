@@ -5,7 +5,7 @@ class DataFile:
     def __init__(self, filename):
         """load filename into a pandas dataframe df"""
         self.filename = filename
-        df = pd.read_csv(filename)
+        df = pd.read_csv(filename, dtype={'NodeId': str, 'TagId':str})
         self.df = self._clean_node_id(df)
         self.df = self._clean()
 
