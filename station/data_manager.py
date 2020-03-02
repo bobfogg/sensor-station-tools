@@ -8,6 +8,7 @@ logging.basicConfig(format='%(asctime)s: %(message)s', level=logging.INFO)
 
 class DataManager:
     """Utility for managing CTT Sensor Station data files"""
+    DatePattern = r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$'
     beep_pattern = '*-data*'
     gps_pattern = '*-gps*'
     health_pattern = '*-node*'
@@ -33,8 +34,19 @@ class DataManager:
                     df = pd.read_csv(filename)
                 except pd.errors.EmptyDataError:
                     logging.info('ignoring file {} - no data'.format(filename))
-                df['Time'] = pd.to_datetime(df['Time'])
-                dfs_to_merge.append(df)
+
+                try:
+                    df = df.dropna()
+                    pre_count = df.shape[0]
+                    df = df[df.Time.str.match(self.DatePattern)]
+                    df.Time = pd.to_datetime(df.Time)
+                    post_count = df.shape[0]
+                    delta = pre_count - post_count
+                    if delta > 0:
+                        logging.error('dropped {:,} bad time format records'.format(delta))
+                    dfs_to_merge.append(df)
+                except Exception as err:
+                    logging.error('error merging file: {};  {}'.format(filename, err))
         if len(dfs_to_merge) > 0:
             self.beep_data = pd.concat(dfs_to_merge, axis=0).sort_values('Time')
         else:
