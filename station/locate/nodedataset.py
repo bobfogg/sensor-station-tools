@@ -22,7 +22,7 @@ class NodeDataset:
 
     def save(self, filename, channel=None, tag_id=None):
         """merged beep / node location dataset to file; optionally save specific tag dataset"""
-        df = self.merged_df
+        df = self.df
         if channel is not None:
             df = df[df.RadioId==channel]
         if tag_id is not None:
