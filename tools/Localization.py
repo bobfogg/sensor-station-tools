@@ -5,12 +5,17 @@ import pandas as pd
 import sys
 import json
 
-# Update this to point to your senosr 
-beep_filename = 'beeps.csv'
+# EDIT BELOW #
+
+# Update this to point to your merged beep data file 
+beep_filename = 'station-beep-data.merged.yyyy-mm-dd.csv'
 # node file with lat/lng data for node ids:  required NodeId,lat,lng fields
 node_filename = 'node-locations.csv'
 # Tag File Location - required fields:  TagId
 tag_filename = 'tags-to-analyze.csv'
+
+# STOP EDITING #
+
 tags = []
 with open(tag_filename, 'r') as inFile:
     reader = csv.DictReader(inFile)
@@ -47,9 +52,12 @@ def get_locations(freq):
     filename = 'estimates_{}.csv'.format(freq)
     df.dropna().to_csv(filename)
 
-# resmample frequency for location estimates
+# YOU CAN EDIT BELOW #
+# resample frequency for location estimates
 # T=minutes, S=seconds, H=hours - ex:    30S, 60S, 1T, 5T, 15T, 30T, ...
 
 freq = '60T'
 for freq in ['5T', '15T', '30T', '60T', '120T']:
     get_locations(freq)
+
+# STOP EDITING #
