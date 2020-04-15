@@ -1,5 +1,25 @@
 # Table of Contents
-{{TOC}}
+- [Station-Tools](#station-tools)
+  * [Prerequisites](#prerequisites)
+  * [Setting up your working environment](#setting-up-your-working-environment)
+  * [installing packages](#installing-packages)
+  * [Choosing the correct Python interpreter](#choosing-the-correct-python-interpreter)
+  * [Usage](#usage)
+  * [Data-manager.py](#data-managerpy)
+    + [Inputs](#inputs)
+    + [Outputs (3 files)](#outputs--3-files-)
+  * [Localization.py](#localizationpy)
+    + [Inputs](#inputs-1)
+      - [Beep Filename and Path](#beep-filename-and-path)
+      - [Node Filename and Path](#node-filename-and-path)
+    + [Parameterization](#parameterization)
+      - [Tag IDs](#tag-ids)
+      - [Localization Frequencies](#localization-frequencies)
+    + [Outputs](#outputs)
+  * [Contributing](#contributing)
+  * [License](#license)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
 # Station-Tools
 
