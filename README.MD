@@ -27,6 +27,8 @@ Station-Tools is a set of Python programs used to manage and process your CTT Se
  
 ## Prerequisites
 
+Note: If you are familiar with Python, you can simply set up your own virtual environment with `Pandas`, `PIP Station-Tools`, and `PIP UTM`. `Anaconda` is an IDE that sets up these environments for you so you can get up and running without any Python experience. Therefore for this ReadMe we will assume you are going to install `Anaconda` and `VSC`. You'll need to install `Git` if it doesn't already exist, but `Pandas` will be installed for you when you install `Anaconda`.
+
 * [Anaconda](https://www.anaconda.com/distribution/)
 * [VSC](https://code.visualstudio.com/)
 * [pandas - Python Data Analysis Library](https://pandas.pydata.org/)
@@ -38,7 +40,7 @@ Station-Tools is a set of Python programs used to manage and process your CTT Se
 Once you've installed both Anaconda and VSC, close VSC and restart Anaconda and you should see VSC show up as an application in Anaconda. 
 
 From within Anaconda click the **Launch** button for VSC.  
-VNC will open.
+VSC will open.
 
 From the Explorer menu in VSC
 
