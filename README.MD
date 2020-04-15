@@ -31,7 +31,6 @@ Note: If you are familiar with Python, you can simply set up your own virtual en
 
 * [Anaconda](https://www.anaconda.com/distribution/)
 * [VSC](https://code.visualstudio.com/)
-* [pandas - Python Data Analysis Library](https://pandas.pydata.org/)
 * [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git/)
 
 
