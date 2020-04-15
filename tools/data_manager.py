@@ -31,12 +31,15 @@ class DataManager:
                 # only process if node is not part of the pattern ...
                 logging.info('merging file: {}'.format(filename))
                 try:
-                    df = pd.read_csv(filename)
+                    df = pd.read_csv(filename, dtype={'NodeId': str, 'TagId':str})
                 except pd.errors.EmptyDataError:
                     logging.info('ignoring file {} - no data'.format(filename))
 
                 try:
-                    df = df.dropna()
+                    #pre = df.shape[0]
+                    #df = df.dropna()
+                    #delta = pre - df.shape[0]
+                    #logging.error('dropped {:,} of {:,} n/a/'.format(delta, pre))
                     pre_count = df.shape[0]
                     df = df[df.Time.str.match(self.DatePattern)]
                     df.Time = pd.to_datetime(df.Time)
@@ -59,7 +62,7 @@ class DataManager:
         for filename in sorted(node_health_files):
             logging.info('merging file: {}'.format(filename))
             try:
-                df = pd.read_csv(filename)
+                df = pd.read_csv(filename, dtype={'NodeId': str, 'TagId':str})
             except pd.errors.EmptyDataError:
                 logging.info('ignoring file {} - no data'.format(filename))
 
@@ -82,8 +85,12 @@ class DataManager:
             except pd.errors.EmptyDataError:
                 logging.info('ignoring file {} - no data'.format(filename))
 
-            df['recorded at'] = pd.to_datetime(df['recorded at'])
-            dfs_to_merge.append(df)
+            try:
+                df['recorded at'] = pd.to_datetime(df['recorded at'])
+                dfs_to_merge.append(df)
+            except Exception as err:
+                print(err)
+                print('file', filename)
         if len(dfs_to_merge) > 0:
             self.gps_data = pd.concat(dfs_to_merge, axis=0).sort_values('recorded at')
         else:
