@@ -29,6 +29,7 @@ Station-Tools is a set of Python programs used to manage and process your CTT Se
 
 Note: If you are familiar with Python, you can simply set up your own virtual environment with `Pandas`, `PIP Station-Tools`, and `PIP UTM`. `Anaconda` is an IDE that sets up these environments for you so you can get up and running without any Python experience. Therefore for this ReadMe we will assume you are going to install `Anaconda` and `VSC`. You'll need to install `Git` if it doesn't already exist, but `Pandas` will be installed for you when you install `Anaconda`.
 
+Install the following:
 * [Anaconda](https://www.anaconda.com/distribution/)
 * [VSC](https://code.visualstudio.com/)
 * [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git/)
@@ -49,7 +50,7 @@ From the Explorer menu in VSC
 
 ```https://github.com/bobfogg/sensor-station-tools```
 
-## installing packages
+## installing the station-tools and UTM packages
 
 
 Open up a new terminal window by typing `^~`
@@ -57,12 +58,12 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install **stati
 
 ```bash
 pip install station-tools
-Pip install utm
+pip install utm
 ```
 
 ## Choosing the correct Python interpreter
 
-You may need to assign the correct Python interpreter with some operating systems (such as those running Mac OS X, for example) as VSC will often choose the default rather than the one installed be Anaconda. To do so is fairly easy (Thanks to Beaulin Twinkle at [My Tec Bits][ref]).
+For Windows installs you can likely skip this step, but you may need to assign the correct Python interpreter with some operating systems (such as those running Mac OS X, for example) as VSC will often choose the default rather than the one installed be Anaconda. To do so is fairly easy (Thanks to Beaulin Twinkle at [My Tec Bits][ref]).
 
 [ref]:  https://www.mytecbits.com/apple/macos/visual-studio-code-for-python-macos
 
@@ -74,16 +75,22 @@ You may need to assign the correct Python interpreter with some operating system
 
 ## Usage
 
-There are two Python scripts in the repository, `data-manager.py` and `localization.py`. 
+Within the sensor-station-tools GIT repository, there are several folders, including `station` and `tools`. You'll be working in `tools`, and specifically with the following two Python scripts: `data-manager.py` and `localization.py`. 
 
 ## Data-manager.py
 
-`Data-manager.py` will merge hourly data files that you've downloaded from your CTT SensorStation. It works on a single specified directory, and will differentiate between `beep` `gps` and `node health` files so that the end result are three outputs.
+`Data-manager.py` does exactly what is says- it manages the data from your SensorStation and merges those files into the files necessary to run the next script. You do not need to edit this script.
 
-### Inputs
+### Running the script
 
-`Directory of the SensorStation files to be merged`
 
+To run the script, return to the termial window (or open an new one by typing `^~`) and type the following code:
+
+```py
+python data_manager.py ./path.to.your.data.files/
+```
+
+The data_manager.py program will now run on the folder you specificed in the path, and will differentiate between `beep` `gps` and `node health` files so that the end result are three outputs.
 
 ### Outputs (3 files)
 
@@ -103,6 +110,20 @@ There are two Python scripts in the repository, `data-manager.py` and `localizat
 ***
 ### Inputs
 
+For this program you will be editing the code within the `Localization.py` file to modify the paths to various files, and parameterize the various analysis widows. Look for the code below within the program file.
+
+```py
+# EDIT BELOW #
+
+# Update this to point to your merged beep data file 
+beep_filename = 'station-beep-data.merged.yyyy-mm-dd.csv'
+# node file with lat/lng data for node ids:  required NodeId,lat,lng fields
+node_filename = 'node-locations.csv'
+# Tag File Location - required fields:  TagId
+tag_filename = 'tags-to-analyze.csv'
+
+# STOP EDITING #
+```
 
 #### Beep Filename and Path
 
@@ -126,23 +147,14 @@ There are two Python scripts in the repository, `data-manager.py` and `localizat
  
  Additional fields are fine, but the first three must be as above and note that **field names are case-sensitive.**
 
-### Parameterization
+#### Tag Filename and Path
 
-#### Tag IDs
-
-
-You will need to enter the 8-character tag IDs for your LifeTag and/or PowerTags you will be analyzing. Only data matching the tags listed between the `tags = [` and `]` will be localized.
+The only requirement here is a single column named TagID (case sensitive). Any additional fields will be ignored, but will not cause a problem, so feel free to use files with additional fields.
 
 
-```python
-# tags to analyze
-tags = [
-    '62631E78',
-    '64262A2A',
- ]
- ```
- 
- 
+`TagId`
+: The 8-digit unique identifier that came with your LifeTag or PowerTag. Note that on V2 LifeTags you might see 10 digits. Only include the first 8 digits in this file, as the last two are a CRC and are not included in the datafile being analyzed. **Only data matching the tags listed in the file will be localized**.
+
 #### Localization Frequencies
 
 
@@ -156,9 +168,15 @@ Here you have the option to run multiple localization frequencies simultaneously
 You can therefore edit the frequency loop with as many variants as you wish, just realize that the time it will take to run through large datasets will likely be the limiting factor. 
 
 ```python
-	freq = '60T'
-	for freq in ['5T', '15T', '30T', '60T', '120T']:
-		get_locations(freq)
+# YOU CAN EDIT BELOW #
+# resample frequency for location estimates
+# T=minutes, S=seconds, H=hours - ex:    30S, 60S, 1T, 5T, 15T, 30T, ...
+
+freq = '60T'
+for freq in ['5T', '15T', '30T', '60T', '120T']:
+    get_locations(freq)
+
+# STOP EDITING #
 ```
 
 ### Outputs
