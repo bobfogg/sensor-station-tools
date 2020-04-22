@@ -1,19 +1,17 @@
-# Table of Contents
 - [Station-Tools](#station-tools)
   * [Prerequisites](#prerequisites)
   * [Setting up your working environment](#setting-up-your-working-environment)
-  * [installing packages](#installing-packages)
+  * [installing the station-tools and UTM packages](#installing-the-station-tools-and-utm-packages)
   * [Choosing the correct Python interpreter](#choosing-the-correct-python-interpreter)
   * [Usage](#usage)
   * [Data-manager.py](#data-managerpy)
-    + [Inputs](#inputs)
+    + [Running the script](#running-the-script)
     + [Outputs (3 files)](#outputs--3-files-)
   * [Localization.py](#localizationpy)
-    + [Inputs](#inputs-1)
+    + [Inputs](#inputs)
       - [Beep Filename and Path](#beep-filename-and-path)
       - [Node Filename and Path](#node-filename-and-path)
-    + [Parameterization](#parameterization)
-      - [Tag IDs](#tag-ids)
+      - [Tag Filename and Path](#tag-filename-and-path)
       - [Localization Frequencies](#localization-frequencies)
     + [Outputs](#outputs)
   * [Contributing](#contributing)
@@ -106,7 +104,7 @@ The data_manager.py program will now run on the folder you specificed in the pat
 
 ## Localization.py
 
-`Localization.py` will analyze the station-beep-data.merged file created by `Data.manager.py` and output localizations for each tag ID in the dataset over any number of time steps you specify.  The xxx method of localization is used here, which ignores RSSI in favor of beep frequency. Future versions will include a number of methods for localization calculation. To run this script requires some parameterization.
+`Localization.py` will analyze the station-beep-data.merged file created by `Data.manager.py` and output localizations for each tag ID in the dataset over any number of time steps you specify.  The method of localization used herw ignores RSSI in favor of beep frequency. Future versions will include a number of methods for localization calculation. To run this script requires some parameterization as well as two other files: a Node file, and a Tag file (See below).
 ***
 ### Inputs
 
@@ -134,9 +132,9 @@ tag_filename = 'tags-to-analyze.csv'
 
 
  node_filename = `path to nodes.csv` file
- `nodes.csv` is a file that you must create that includes lat/long data for node IDs. The format of the csv must follow: `NodeId, lat, lng`. 
+ `nodes.csv` is a file that you must create that includes lat/long data for node IDs. The format of the csv must follow: `NodeId, lat, lng`. Note that the headers are case-sensitive.
  
- `NodeID`
+ `NodeId`
  : the unique serial ID assigned to the Node at delivery
  
  `lat`
@@ -149,7 +147,7 @@ tag_filename = 'tags-to-analyze.csv'
 
 #### Tag Filename and Path
 
-The only requirement here is a single column named TagID (case sensitive). Any additional fields will be ignored, but will not cause a problem, so feel free to use files with additional fields.
+The only requirement here is a single column named TagId (case sensitive). Any additional fields will be ignored, but will not cause a problem, so feel free to use files with additional fields.
 
 
 `TagId`
@@ -158,7 +156,7 @@ The only requirement here is a single column named TagID (case sensitive). Any a
 #### Localization Frequencies
 
 
-Here you have the option to run multiple localization frequencies simultaneously. At the end of the script you will find the frequency loop beginning with `freq = 60T`, which means localize at 60-minute intervals. The nomenclature is as follows:
+Here you have the option to run multiple localization frequencies sequentially. At the end of the script you will find the frequency loop beginning with `freq = 60T`, which means localize at 60-minute intervals. The nomenclature is as follows:
 
 	H = hours
 	T = minutes
