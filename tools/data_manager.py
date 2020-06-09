@@ -8,7 +8,7 @@ logging.basicConfig(format='%(asctime)s: %(message)s', level=logging.INFO)
 
 class DataManager:
     """Utility for managing CTT Sensor Station data files"""
-    DatePattern = r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$'
+    DatePattern = r'^\d{4}-\d{2}-\d{2}[T, ]\d{2}:\d{2}:\d{2}(.\d{3})?[Z]?'
     beep_pattern = '*-data*'
     gps_pattern = '*-gps*'
     health_pattern = '*-node*'
@@ -36,11 +36,9 @@ class DataManager:
                     logging.info('ignoring file {} - no data'.format(filename))
 
                 try:
-                    #pre = df.shape[0]
-                    #df = df.dropna()
-                    #delta = pre - df.shape[0]
-                    #logging.error('dropped {:,} of {:,} n/a/'.format(delta, pre))
+                    delta = 0
                     pre_count = df.shape[0]
+                    df = df.dropna(subset=['Time']) # drop null Time records
                     df = df[df.Time.str.match(self.DatePattern)]
                     df.Time = pd.to_datetime(df.Time)
                     post_count = df.shape[0]
