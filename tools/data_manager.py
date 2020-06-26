@@ -31,7 +31,7 @@ class DataManager:
                 # only process if node is not part of the pattern ...
                 logging.info('merging file: {}'.format(filename))
                 try:
-                    df = pd.read_csv(filename, dtype={'NodeId': str, 'TagId':str})
+                    df = pd.read_csv(filename, dtype={'NodeId': str, 'TagId':str}, error_bad_lines=False, warn_bad_lines=True)
                 except pd.errors.EmptyDataError:
                     logging.info('ignoring file {} - no data'.format(filename))
 
@@ -60,7 +60,7 @@ class DataManager:
         for filename in sorted(node_health_files):
             logging.info('merging file: {}'.format(filename))
             try:
-                df = pd.read_csv(filename, dtype={'NodeId': str, 'TagId':str})
+                df = pd.read_csv(filename, dtype={'NodeId': str, 'TagId':str}, error_bad_lines=False, warn_bad_lines=True)
             except pd.errors.EmptyDataError:
                 logging.info('ignoring file {} - no data'.format(filename))
 
@@ -79,7 +79,7 @@ class DataManager:
         for filename in sorted(gps_files):
             logging.info('merging file: {}'.format(filename))
             try:
-                df = pd.read_csv(filename)
+                df = pd.read_csv(filename, error_bad_lines=False, warn_bad_lines=True)
             except pd.errors.EmptyDataError:
                 logging.info('ignoring file {} - no data'.format(filename))
 
