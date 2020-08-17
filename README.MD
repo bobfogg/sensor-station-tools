@@ -13,9 +13,11 @@
       - [Node Filename and Path](#node-filename-and-path)
       - [Tag Filename and Path](#tag-filename-and-path)
       - [Localization Frequencies](#localization-frequencies)
+    + [Running the script](#running-the-script-1)
     + [Outputs](#outputs)
   * [Contributing](#contributing)
   * [License](#license)
+
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
@@ -82,7 +84,7 @@ Within the sensor-station-tools GIT repository, there are several folders, inclu
 ### Running the script
 
 
-To run the script, return to the termial window (or open an new one by typing `^~`) and type the following code:
+To run the script, return to the terminal window (or open an new one by typing `^~`) and type the following code:
 
 ```py
 python data_manager.py ./path.to.your.data.files/
@@ -176,6 +178,17 @@ for freq in ['5T', '15T', '30T', '60T', '120T']:
 
 # STOP EDITING #
 ```
+
+### Running the script
+
+To run the script, return to the terminal window (or open an new one by typing `^~`) and type the following code:
+
+```py
+python Localization.py
+```
+
+The Localization.py program will now run for the various timesteps you designated in the frequency loop.
+
 
 ### Outputs
 
