@@ -40,7 +40,7 @@ class DataManager:
                     pre_count = df.shape[0]
                     df = df.dropna(subset=['Time']) # drop null Time records
                     df = df[df.Time.str.match(self.DatePattern)]
-                    df.Time = pd.to_datetime(df.Time)
+                    df.Time = pd.to_datetime(df.Time).dt.tz_localize('utc')
                     post_count = df.shape[0]
                     delta = pre_count - post_count
                     if delta > 0:
@@ -64,7 +64,7 @@ class DataManager:
             except pd.errors.EmptyDataError:
                 logging.info('ignoring file {} - no data'.format(filename))
 
-            df['Time'] = pd.to_datetime(df['Time'])
+            df['Time'] = pd.to_datetime(df['Time']).dt.tz_localize('utc')
             dfs_to_merge.append(df)
         if len(dfs_to_merge) > 0:
             self.health_data = pd.concat(dfs_to_merge, axis=0).sort_values('Time')
@@ -139,7 +139,7 @@ if __name__ == '__main__':
     manager.load_data(directory_name)
 
     # you can export data during a time window by specifying begin and end dates during export
-    begin = datetime.datetime(2019,11,1).replace(tzinfo=utc)
-    end = datetime.datetime(2019,11,7).replace(tzinfo=utc)
-    #manager.export_data(begin=begin, end=end)
-    manager.export_data()
+    begin = datetime.datetime(2019,12,11).replace(tzinfo=utc)
+    end = datetime.datetime(2019,12,11).replace(tzinfo=utc)
+    manager.export_data(begin=begin, end=end)
+    #manager.export_data()
