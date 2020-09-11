@@ -68,8 +68,8 @@ class LocationApi:
                 max_rssi = row.TagRSSI['max']
                 radius = self.get_radius_from_rssi(max_rssi, path_loss_coefficient)
                 beep_count = row.TagRSSI['count']
-                info['avg_x'] = row.node_x['max'] * beep_count
-                info['avg_y'] = row.node_y['max'] * beep_count
+                info['avg_x'] += row.node_x['max'] * beep_count
+                info['avg_y'] += row.node_y['max'] * beep_count
                 total += beep_count
                 info['nodes'].append({
                     'max_rssi': max_rssi,
