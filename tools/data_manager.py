@@ -40,7 +40,7 @@ class DataManager:
                     pre_count = df.shape[0]
                     df = df.dropna(subset=['Time']) # drop null Time records
                     df = df[df.Time.str.match(self.DatePattern)]
-                    df.Time = pd.to_datetime(df.Time).dt.tz_localize('utc')
+                    df.Time = pd.to_datetime(df.Time)
                     post_count = df.shape[0]
                     delta = pre_count - post_count
                     if delta > 0:
