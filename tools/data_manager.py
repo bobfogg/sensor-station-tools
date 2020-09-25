@@ -141,5 +141,5 @@ if __name__ == '__main__':
     # you can export data during a time window by specifying begin and end dates during export
     begin = datetime.datetime(2019,12,11).replace(tzinfo=utc)
     end = datetime.datetime(2019,12,11).replace(tzinfo=utc)
-    manager.export_data(begin=begin, end=end)
-    #manager.export_data()
+    #manager.export_data(begin=begin, end=end)
+    manager.export_data()
